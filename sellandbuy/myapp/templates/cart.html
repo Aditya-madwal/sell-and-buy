@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}" />
+    <!-- Link to your CSS file -->
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">SELL-N-BUY</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <b
+                ><a class="nav-link active" aria-current="page" href="#"
+                  >Your Cart</a
+                ></b
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color: red" href="{% url 'logout' %}"
+                >Logout</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true"
+                >Hello {{user.first_name}} {{user.last_name}}</a
+              >
+            </li>
+          </ul>
+
+          <form class="d-flex" role="search" method="POST">
+            {% csrf_token %}
+            <input
+              class="form-control me-2"
+              type="search"
+              name="query"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <input class="btn btn-outline-success" type="submit" />
+            <!-- Change to type="submit" -->
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="product-section">
+        <h2>{{buyer.first_name}} {{buyer.last_name}}'s Cart</h2>
+        <div class="product-list">
+          <!-- Loop through products in cart -->
+          {% for cart_product in cart %}
+          <div class="card" style="width: 23rem; margin: 10px; height: auto">
+            <img
+              src="{{cart_product.product.image_field.url}}"
+              class="card-img-top"
+              alt="{{cart_product.product.name}}"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{cart_product.product.name}}</h5>
+              <p class="card-text">{{cart_product.product.desc}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                Price : <b>₹{{cart_product.product.price}}</b>
+              </li>
+              <li class="list-group-item">
+                Quantity : <b>{{cart_product.quantity}}</b>
+              </li>
+              <li class="list-group-item">A third item</li>
+            </ul>
+            <div class="card-body">
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="summary-section">
+        <h2>Order Summary</h2>
+        <div class="summary-details">
+          <p>Total Products: {{ total_products }}</p>
+          <p>Total Items (products * quantity): {{ total_items }}</p>
+          <p>Total Payable Amount: {{ total_payable }}</p>
+        </div>
+        <button class="proceed-button">Proceed to Buy</button>
+      </div>
+    </div>
+  </body>
+</html>

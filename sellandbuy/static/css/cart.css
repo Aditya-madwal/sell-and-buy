@@ -1,0 +1,127 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.product-section {
+    width: 65%;
+    padding: 20px;
+    border-radius: 8px;
+    /* background-color: #f8f9fa; */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-card {
+    width: calc(50% - 20px);
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #e2e6ea;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin: 10px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto; /* Let the image define the height */
+    border-radius: 8px;
+}
+.product-details {
+    margin-top: 10px;
+}
+
+.product-card {
+    /* Existing styles */
+    position: relative; /* Needed for absolute positioning of buttons */
+}
+
+.buttons {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.quantity-button {
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.increase-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.decrease-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.delete-button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.quantity-button:hover,
+.delete-button:hover {
+    filter: brightness(1.2); /* Increase brightness on hover */
+}
+
+
+.summary-section {
+    width: 30%;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgb(177, 177, 177);
+    background-color: #fff;
+    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); */
+}
+
+.summary-details {
+    margin-bottom: 20px;
+}
+
+.proceed-button {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.proceed-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* ----------------------- */
+
+.card{
+    flex: 0 0 calc(50% - 20px);
+}
+
+.product-list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Distribute space between cards */
+}

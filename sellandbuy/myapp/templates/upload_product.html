@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Product</title>
+    <link rel="stylesheet" href="{% static 'css/upload_product.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Upload a product</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_name">Name:</label>
+          {{ form.name }}
+        </div>
+        <div class="form-group">
+          <label for="id_name">Description (<i>Optional</i>):</label>
+          {{ form.desc }}
+        </div>
+        <div class="form-group">
+          <label for="id_price">Price:</label>
+          {{ form.price }}
+        </div>
+        <div class="form-group">
+          <label for="id_image_field">Image:</label>
+          {{ form.image_field }}
+        </div>
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>
