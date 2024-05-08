@@ -26,6 +26,18 @@
       {{ form.last_name }}
       <br />
 
+      {% comment %}
+      <div class="select-wrapper">
+        {% endcomment %}
+        <label for="role">You want to : </label>
+        <select id="mySelect" class="custom-select" name="role">
+          <option value="buy">Buy some stuff</option>
+          <option value="sell">Sell some stuff</option>
+        </select>
+        {% comment %}
+      </div>
+      {% endcomment %}
+
       <label for="password1">Password:</label>
       {{ form.password1 }}
       <br />

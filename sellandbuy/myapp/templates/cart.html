@@ -29,7 +29,7 @@
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">SELL-N-BUY</a>
+        <a class="navbar-brand" href="{% url "home" %}">SELL-N-BUY</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -61,62 +61,40 @@
               >
             </li>
           </ul>
-
-          <form class="d-flex" role="search" method="POST">
-            {% csrf_token %}
-            <input
-              class="form-control me-2"
-              type="search"
-              name="query"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <input class="btn btn-outline-success" type="submit" />
-            <!-- Change to type="submit" -->
-          </form>
         </div>
       </div>
     </nav>
 
     <div class="container">
       <div class="product-section">
-        <h2>{{buyer.first_name}} {{buyer.last_name}}'s Cart</h2>
+        <h2 style="margin-bottom:30px">{{buyer.first_name}} {{buyer.last_name}}'s Cart</h2>
         <div class="product-list">
-          <!-- Loop through products in cart -->
           {% for cart_product in cart %}
-          <div class="card" style="width: 23rem; margin: 10px; height: auto">
-            <img
-              src="{{cart_product.product.image_field.url}}"
-              class="card-img-top"
-              alt="{{cart_product.product.name}}"
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{cart_product.product.name}}</h5>
-              <p class="card-text">{{cart_product.product.desc}}</p>
+          <div class="cart-product-card">
+            <img src="{{cart_product.product.image_field.url}}" alt="Product Image" class="product-image">
+            <div class="product-details">
+                <h3 class="product-name">{{cart_product.product.name}}</h3>
+                <h3 class="product-name product-seller">Sold by : {{cart_product.product.seller}}</h3>
+                <p class="product-price">₹{{cart_product.product.price}}</p>
+                <div class="quantity-controls">
+                    <button class="quantity-button decrease-button"><a href="{% url 'decrease_cart' cart_product.id %}">-</a></button>
+                    <span class="quantity">{{cart_product.quantity}}</span>
+                    <button class="quantity-button increase-button"><a href="{% url 'increase_cart' cart_product.id %}">+</a></button>
+                </div>
             </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                Price : <b>₹{{cart_product.product.price}}</b>
-              </li>
-              <li class="list-group-item">
-                Quantity : <b>{{cart_product.quantity}}</b>
-              </li>
-              <li class="list-group-item">A third item</li>
-            </ul>
-            <div class="card-body">
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
+            <button class="delete-button"><a href="{% url "delete_from_cart" cart_product.id %}">Delete</a></button>
+            <button class="view-button"><a href="#">View Product</a></button>
+        </div>
           {% endfor %}
         </div>
       </div>
       <div class="summary-section">
         <h2>Order Summary</h2>
+        <hr>
         <div class="summary-details">
-          <p>Total Products: {{ total_products }}</p>
-          <p>Total Items (products * quantity): {{ total_items }}</p>
-          <p>Total Payable Amount: {{ total_payable }}</p>
+          <p>Total Products:  <span><b>{{ total_products }}</b></span></p>
+          <p>Total Items (products * quantity):  <span><b>{{ total_items }}</b></span></p>
+          <p>Total Payable Amount:  <span><b>₹{{ total_payable }}</b></span></p>
         </div>
         <button class="proceed-button">Proceed to Buy</button>
       </div>

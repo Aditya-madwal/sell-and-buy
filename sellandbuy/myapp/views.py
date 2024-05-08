@@ -27,6 +27,19 @@ def register_view(request) :
     if request.method == 'POST' :
         if form.is_valid() :
             form.save()
+            
+            role = request.POST['role']
+            username = request.POST['username']
+            user = User.objects.get(username = username)
+
+            if role == "sell" :
+                s = Seller.objects.create(user = user)
+                s.save()
+            else :
+                b = Buyer.objects.create(user = user)
+                b.save()
+
+
         return redirect(loginview)
 
     return render(request, 'register.html', context=context)
@@ -40,7 +53,6 @@ def loginview(request) :
         password = request.POST['password']
 
         user = authenticate(request, username = username, password = password)
-        # this user is a user object and authenticate function is checking if username and password are valid as credentials or not ... if not then user = none
 
         if user is not None :
             # login into the website
@@ -138,6 +150,61 @@ def upload_product(request):
     return render(request, 'upload_product.html', {'form': form})
 
 
+@login_required(login_url=loginview)
+def product_view(request, code) :
+    product = Product.objects.get(code = code)
+    added_to_cart = 0
+    buyer = Buyer.objects.get(user = request.user)
+
+    reviews = Reviews.objects.filter(product = product)
+
+
+    cart = Cart.objects.filter(product = product,buyer = buyer)
+    if len(cart) == 0 :
+        # exists in the cart
+        added_to_cart = 1
+        pass
+    else :
+        # does not exists
+        pass
+
+    months_list = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+    ]
+
+    context = {
+        'product' : product,
+        'added' : added_to_cart,
+        'reviews' : reviews,
+        'months' : months_list,
+        'function' : monthname,
+        'ratings' : analyse_ratings(product),
+        'reviews_exists' : False,
+        'avg_rating' : average_rating(product),
+    }
+
+    if request.method == 'POST' :
+        review = request.POST['review-statement']
+        stars = request.POST['rating']
+        provider = Buyer.objects.get(user = request.user)
+        Reviews.objects.create(product = product,review = review, stars = stars, provider = provider).save()
+
+        return redirect(product_view, code = product.code)
+
+    return render(request, 'product.html', context = context)
+    
+
 
 # -------------------- INVISIBLE CALLS -----------------------
 
@@ -145,15 +212,50 @@ def upload_product(request):
 def add_to_cart(request, code) :
     product = Product.objects.get(code = code)
     buyer = Buyer.objects.get(user = request.user)
+    cart = Cart.objects.filter(buyer = buyer)
+
+    for i in cart :
+        if product.code == i.product.code :
+            cart_obj = Cart.objects.get(product = product)
+            cart_obj.quantity += 1
+            cart_obj.save()
+            return redirect(cartview)
+        pass
+
     cart_obj = Cart.objects.create(product = product, buyer = buyer)
-    cart_obj.quantity += 1
+    cart_obj.quantity = 1
     cart_obj.save()
 
     return redirect(cartview)
 
+@login_required(login_url=loginview)
+def increase_cart_quantity(request, cart_id) :
+    cart_product = Cart.objects.get(id = cart_id)
+    cart_product.quantity += 1
+    cart_product.save()
+    return redirect(cartview)
+
+@login_required(login_url=loginview)
+def decrease_cart_quantity(request, cart_id) :
+    cart_product = Cart.objects.get(id = cart_id)
+    if cart_product.quantity == 1 :
+        cart_product.delete()
+    else :
+        cart_product.quantity -= 1
+        cart_product.save()
+    return redirect(cartview)
+
+@login_required(login_url=loginview)
+def delete_from_cart(request, cart_id) :
+    cart_product = Cart.objects.get(id = cart_id)
+    cart_product.delete()
+    return redirect(cartview)
+
+
 # ----------------- BRAIN --------------------
 import random
 import string
+
 
 def generate_random_code():
     characters = string.ascii_letters + string.digits
@@ -180,3 +282,53 @@ def count_items_in_cart(cart) :
         total_items += i.quantity
     
     return [total_products, total_items]
+
+def monthname(month) :
+    return f"this is {month}"
+
+def analyse_ratings(product) :
+    certain_reviews = Reviews.objects.filter(product = product)
+
+    if len(certain_reviews) == 0 :
+        return "no reviews yet"
+
+    total_reviews = len(certain_reviews)
+
+    five_stars = 0
+    four_stars = 0
+    three_stars = 0
+    two_stars = 0
+    one_stars = 0
+
+    for i in certain_reviews :
+        if i.stars == 5 :
+            five_stars += 1
+        elif i.stars == 4 :
+            four_stars += 1
+        elif i.stars == 3 :
+            three_stars += 1
+        elif i.stars == 2 :
+            two_stars += 1
+        elif i.stars == 1 :
+            one_stars += 1
+    
+    five_stars = (five_stars/total_reviews)*100
+    four_stars = (four_stars/total_reviews)*100
+    three_stars = (three_stars/total_reviews)*100
+    two_stars = (two_stars/total_reviews)*100
+    one_stars = (one_stars/total_reviews)*100
+
+    return [five_stars,four_stars,three_stars,two_stars,one_stars]
+
+def average_rating(product) :
+    certain_reviews = Reviews.objects.filter(product = product)
+
+    if len(certain_reviews) == 0 :
+        print(f"this is {certain_reviews}")
+        return 0
+
+    rating = 0
+    for i in certain_reviews :
+        rating += i.stars
+    
+    return int(rating/len(certain_reviews))

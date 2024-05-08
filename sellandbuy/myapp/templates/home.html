@@ -40,7 +40,7 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <b
-                ><a class="nav-link active" aria-current="page" href="#"
+                ><a class="nav-link active" aria-current="page" href="{% url "cart" %}"
                   >Your Cart</a
                 ></b
               >
@@ -72,10 +72,10 @@
         </div>
       </div>
     </nav>
-
-    <div id="productcontainer">
-      {% for product in products %}
-      <div class="card" style="width: 18rem; margin: 20px">
+    <div id="maincontainer">
+      <div id="productcontainer">
+        {% for product in products %}
+        <div class="card" style="width: 18rem; margin: 20px">
         <img
           src="{{product.image_field.url}}"
           class="card-img-top"
@@ -102,11 +102,14 @@
           <button type="button" class="btns btn-primary">
             <a href="add_to_cart/{{product.code}}">Add to Cart</a>
           </button>
-          <button type="button" class="btns btn-success">Buy Now</button>
+          <button type="button" class="btns btn-success">
+            <a href="product/{{product.code}}">View Product</a>
+          </button>
         </div>
       </div>
       {% endfor %}
     </div>
+  </div>
   </body>
   <script>
     var query = document.getElementById("searchBox").value;

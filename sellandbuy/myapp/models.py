@@ -41,13 +41,12 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class Reviews(models.Model) :
     product = models.ForeignKey("myapp.Product", on_delete=models.CASCADE)
     provider = models.ForeignKey("myapp.Buyer", on_delete=models.CASCADE)
-    stars = models.IntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(5)]
-    )
+    stars = models.IntegerField()
     review = models.CharField(max_length=100)
+    date = models.DateField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
-        return self.review
+        return f"{self.product}-->{self.review}"
     
 
 class Cart(models.Model) :

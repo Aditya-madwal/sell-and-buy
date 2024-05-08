@@ -7,9 +7,15 @@ a{
     color: white;
 }
 
+/* #maincontainer{
+    display: flex;
+    justify-content: center;
+} */
+
 #productcontainer {
     display: flex;
     flex-wrap:wrap;
+    justify-content: center;
 }
 
 .card {
@@ -72,7 +78,7 @@ a{
     border: none;
 }
 
-.btn-success:hover {
+.btn-warning:hover {
     background-color: #218838;
 }
 
