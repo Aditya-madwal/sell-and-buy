@@ -127,13 +127,11 @@ from .forms import Product_form
 @login_required(login_url=loginview)
 def upload_product(request):
 
-    user = request.user
-    
-    try:
-        Seller.objects.get(user = user)
+    try :
+        seller = Seller.objects.get(user = request.user)
         pass
     except :
-        return HttpResponse("<b>this is not a seller account.</b>")
+        return HttpResponse("Create a Seller account to upload a product.")
 
     if request.method == 'POST':
         form = Product_form(request.POST, request.FILES)
@@ -203,8 +201,18 @@ def product_view(request, code) :
         return redirect(product_view, code = product.code)
 
     return render(request, 'product.html', context = context)
-    
 
+
+# @login_required(login_url=loginview)
+# def order_view(request) :
+#      buyer = Buyer.objects.get(user = request.user)
+#      orders = Orders.objects.filter(buyer = buyer)
+
+#     context = {
+#         'orders' : orders,
+#     }
+
+#      return HttpResponse('<b>THE ORDER PAGE</b>')
 
 # -------------------- INVISIBLE CALLS -----------------------
 
@@ -282,9 +290,6 @@ def count_items_in_cart(cart) :
         total_items += i.quantity
     
     return [total_products, total_items]
-
-def monthname(month) :
-    return f"this is {month}"
 
 def analyse_ratings(product) :
     certain_reviews = Reviews.objects.filter(product = product)
