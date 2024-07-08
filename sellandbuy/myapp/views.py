@@ -74,12 +74,16 @@ def logoutview(request) :
 @login_required(login_url = loginview)
 def homeview(request) :
     if request.method == 'GET' :
-        # obj = Product.objects.get(id = 10)
-        # img_url = get_image_file_name(obj.image_field.url)
-        # print(obj.image_field.url)
-
         products = Product.objects.all()
+        buyer = Buyer.objects.get(user = request.user)
+        cart_products = Cart.objects.filter(buyer = buyer)
 
+        cart = []
+        for i in cart_products :
+            cart.append(i.product.code)
+        print('=====================')
+        print(cart)
+        print('=====================')
 
         if len(request.GET) > 0 :
             # there is some query
@@ -93,6 +97,7 @@ def homeview(request) :
         context = {
             'user' : request.user,
             'products' : products,
+            'cartcodes' : cart,
         }
 
         return render(request, 'home.html', context = context)
@@ -186,7 +191,6 @@ def product_view(request, code) :
         'added' : added_to_cart,
         'reviews' : reviews,
         'months' : months_list,
-        'function' : monthname,
         'ratings' : analyse_ratings(product),
         'reviews_exists' : False,
         'avg_rating' : average_rating(product),

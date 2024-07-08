@@ -23,8 +23,6 @@ class Address(models.Model) :
     def __str__(self):
         return self.address
     
-
-
 class Product(models.Model) :
     code = models.CharField(max_length=7, unique=True, blank=True, null=True) # thala for a reason
     name = models.CharField(max_length=100)

@@ -23,6 +23,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/cart.css' %}" />
     <!-- Link to your CSS file -->
   </head>
@@ -77,13 +78,13 @@
                 <h3 class="product-name product-seller">Sold by : {{cart_product.product.seller}}</h3>
                 <p class="product-price">₹{{cart_product.product.price}}</p>
                 <div class="quantity-controls">
-                    <button class="quantity-button decrease-button"><a href="{% url 'decrease_cart' cart_product.id %}">-</a></button>
+                    <button class="quantity-button decrease-button" onclick="decrease_cart_quantity('{{cart_product.id}}','{{cart_product.product.price}}',this)"><a>-</a></button>
                     <span class="quantity">{{cart_product.quantity}}</span>
-                    <button class="quantity-button increase-button"><a href="{% url 'increase_cart' cart_product.id %}">+</a></button>
+                    <button class="quantity-button increase-button" onclick="increase_cart_quantity('{{cart_product.id}}','{{cart_product.product.price}}',this)"><a>+</a></button>
                 </div>
             </div>
             <button class="delete-button"><a href="{% url "delete_from_cart" cart_product.id %}">Delete</a></button>
-            <button class="view-button"><a href="#">View Product</a></button>
+            <button class="view-button"><a href="/product/{{cart_product.product.code}}">View Product</a></button>
         </div>
           {% endfor %}
         </div>
@@ -93,11 +94,12 @@
         <hr>
         <div class="summary-details">
           <p>Total Products:  <span><b>{{ total_products }}</b></span></p>
-          <p>Total Items (products * quantity):  <span><b>{{ total_items }}</b></span></p>
-          <p>Total Payable Amount:  <span><b>₹{{ total_payable }}</b></span></p>
+          <p>Total Items (products * quantity):  <span id="total_items"><b>{{ total_items }}</b></span></p>
+          <p>Total Payable Amount:  <span id="total_payable"><b>₹{{ total_payable }}</b></span></p>
         </div>
         <button class="proceed-button">Proceed to Buy</button>
       </div>
     </div>
   </body>
+  <script src="{% static 'js/product_action.js' %}"></script>
 </html>
