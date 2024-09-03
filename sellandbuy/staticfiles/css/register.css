@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+
+  form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+
+  input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  .error-message {
+    color: #f00;
+    margin-top: 5px;
+  }
+
+  /* Hide default select arrow */
+.select-wrapper select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5em 2em 0.5em 1em;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Style select dropdown options */
+.select-wrapper select option {
+  /* background-color: red; */
+  padding: 100px;
+}
+
+/* Hover effect */
+.select-wrapper select:hover {
+  border-color: #aaa;
+}
+
+/* Focus effect */
+.select-wrapper select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

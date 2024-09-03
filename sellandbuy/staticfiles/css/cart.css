@@ -1,0 +1,171 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.product-section {
+    width: 65%;
+    padding: 20px;
+    border-radius: 8px;
+    /* background-color: #f8f9fa; */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.summary-section {
+    position: sticky;
+    top: 20px;
+    width: 30%;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgb(177, 177, 177);
+    background-color: #fff;
+    height:fit-content;
+    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); */
+}
+
+.summary-details {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.summary-details p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.proceed-button {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.proceed-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* ----------------------- */
+
+.card{
+    flex: 0 0 calc(50% - 20px);
+}
+
+.product-list{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-between; /* Distribute space between cards */
+}
+
+/* ------------------------------ */
+.cart-product-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; /* Fixed width */
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Inter', sans-serif; /* Use Inter font */
+}
+
+.product-image {
+    width: 80px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product-details {
+    flex: 1;
+    margin-left: 20px; /* Add space between image and details */
+}
+
+.product-name {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #333; /* Adjust text color */
+}
+
+.product-price {
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.quantity {
+    padding: 0 10px;
+    font-size: 1.1rem;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.view-button{
+    margin-left: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.summary-details span {
+    font-size: 1.5rem;
+    float: right;
+}
